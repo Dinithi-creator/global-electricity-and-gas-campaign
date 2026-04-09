@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>IFS Copperleaf – Global E&G Campaign Hub</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f7fe;color:#1a1a1a;}
+a{text-decoration:none;color:inherit;}
+button{font-family:inherit;cursor:pointer;}
+img{display:block;}
+::-webkit-scrollbar{height:4px;width:4px;}
+::-webkit-scrollbar-thumb{background:#CECBF6;border-radius:4px;}
+
+/* NAV */
+#nav{position:sticky;top:0;z-index:100;background:rgba(26,16,64,.97);border-bottom:1px solid #3C3489;}
+#nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:4px;overflow-x:auto;}
+#nav-brand{margin-right:16px;padding:12px 16px 12px 0;border-right:1px solid #3C3489;display:flex;align-items:center;gap:8px;flex-shrink:0;}
+#nav-brand .dot{width:8px;height:8px;border-radius:50%;background:#AFA9EC;}
+#nav-brand span{color:#CECBF6;font-size:12px;font-weight:500;white-space:nowrap;}
+.nav-btn{padding:14px 14px;font-size:13px;font-weight:400;border:none;background:transparent;color:#8880cc;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;}
+.nav-btn.active{color:#CECBF6;font-weight:500;border-bottom:2px solid #AFA9EC;}
+
+/* SECTIONS */
+.section{padding:52px 24px;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-white{background:#fff;border-top:1px solid #e8e6f8;border-bottom:1px solid #e8e6f8;}
+.section-light{background:#f8f7fe;border-top:1px solid #e8e6f8;}
+.section-dark{background:#26215C;padding:44px 24px;}
+.section-darkest{background:#1a1040;padding:44px 24px;}
+.section-footer{background:#1a1040;border-top:1px solid #3C3489;padding:14px 24px;text-align:center;}
+.section-footer p{font-size:11px;color:#534AB7;}
+
+/* HEADING */
+.sh-bar{width:28px;height:3px;background:#7F77DD;border-radius:2px;margin-bottom:8px;}
+.sh-bar.green{background:#0F6E56;}
+.sh-bar.gray{background:#5F5E5A;}
+.sh-bar.light{background:#CECBF6;}
+.sh-title{font-size:22px;font-weight:500;color:#26215C;margin:0;}
+.sh-title.light{color:#fff;}
+.sh-sub{font-size:14px;color:#888780;margin:6px 0 0;}
+.sh-sub.light{color:#CECBF6;}
+.sh-wrap{margin-bottom:24px;}
+
+/* TAGS */
+.tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;font-weight:500;white-space:nowrap;margin-right:3px;margin-bottom:3px;}
+
+/* HERO */
+#hero{background:linear-gradient(140deg,#1a1040 0%,#26215C 55%,#3C3489 100%);padding:64px 24px 52px;}
+#hero-inner{max-width:1100px;margin:0 auto;}
+.hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.hero-badge{background:rgba(127,119,221,.2);border:1px solid #7F77DD;color:#CECBF6;border-radius:20px;padding:3px 12px;font-size:11px;}
+#hero h1{font-size:36px;font-weight:500;color:#fff;line-height:1.2;max-width:680px;margin:0 0 14px;}
+#hero p{font-size:15px;color:#CECBF6;max-width:580px;line-height:1.7;margin:0 0 32px;}
+.hero-meta{display:flex;flex-wrap:wrap;gap:12px;}
+.hero-meta-item{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:10px 16px;}
+.hero-meta-item .k{font-size:11px;color:#AFA9EC;margin-bottom:2px;}
+.hero-meta-item .v{font-size:13px;font-weight:500;color:#fff;}
+
+/* IDC BAND */
+#idc-band{background:#26215C;padding:44px 24px;}
+#idc-band .inner{max-width:1100px;margin:0 auto;}
+.idc-top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:28px;}
+.idc-label{font-size:11px;letter-spacing:2px;color:#AFA9EC;text-transform:uppercase;margin-bottom:8px;}
+.idc-title{font-size:22px;font-weight:500;color:#fff;margin:0 0 6px;}
+.idc-sub{font-size:13px;color:#CECBF6;max-width:520px;}
+.idc-btn{display:inline-block;background:#7F77DD;color:#fff;padding:10px 22px;border-radius:6px;font-size:13px;font-weight:500;flex-shrink:0;}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;}
+.stat-card{background:rgba(127,119,221,.15);border:1px solid #534AB7;border-radius:10px;padding:16px 14px;text-align:center;}
+.stat-n{font-size:26px;font-weight:500;color:#DDDAF8;margin-bottom:4px;}
+.stat-l{font-size:11px;color:#AFA9EC;line-height:1.4;}
+
+/* ENTRY POINTS */
+.entry-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+.entry-card{border-radius:14px;overflow:hidden;border:1px solid #e0ddf5;display:flex;flex-direction:column;box-shadow:0 2px 12px rgba(83,74,183,.1);}
+.entry-card.featured{border:2px solid #AFA9EC;}
+.entry-img{height:200px;overflow:hidden;position:relative;}
+.entry-img img{width:100%;height:100%;object-fit:cover;}
+.entry-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,16,64,.7) 0%,transparent 60%);}
+.entry-overlay2{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,16,64,.75) 0%,rgba(83,74,183,.3) 100%);}
+.entry-overlay3{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,16,64,.65) 0%,rgba(26,16,64,.2) 100%);}
+.entry-tags{position:absolute;bottom:14px;left:16px;}
+.entry-badge{position:absolute;top:12px;right:12px;background:#7F77DD;color:#fff;font-size:10px;padding:3px 8px;border-radius:4px;font-weight:500;}
+.entry-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.entry-center span{color:#DDDAF8;font-size:14px;font-weight:500;}
+.entry-body{padding:18px 20px;flex:1;display:flex;flex-direction:column;gap:8px;background:#fff;}
+.entry-title{font-weight:500;font-size:17px;color:#26215C;line-height:1.3;}
+.entry-desc{font-size:13px;color:#5F5E5A;line-height:1.6;}
+.entry-cta{margin-top:auto;padding-top:10px;border-top:1px solid #f0eef8;font-size:13px;color:#534AB7;font-weight:500;}
+
+/* OVERVIEW */
+.overview-grid{display:grid;grid-template-columns:1fr;gap:24px;margin-bottom:36px;}
+.card{background:#fff;border:1px solid #e8e6f8;border-radius:12px;padding:24px;}
+.glance-table{width:100%;border-collapse:collapse;font-size:13px;}
+.glance-table tr{border-bottom:1px solid #f0eef8;}
+.glance-table td{padding:8px 0;}
+.glance-table td:first-child{color:#888780;width:40%;font-weight:500;}
+.glance-table td:last-child{color:#26215C;}
+.challenge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;}
+.challenge-card{background:#fff;border:1px solid #e8e6f8;border-radius:12px;padding:16px;}
+.challenge-icon{font-size:20px;margin-bottom:8px;}
+.challenge-title{font-weight:500;font-size:13px;color:#26215C;margin-bottom:5px;}
+.challenge-desc{font-size:12px;color:#888780;line-height:1.5;}
+
+/* MESSAGING */
+.msg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
+.msg-item{border-left:3px solid #7F77DD;padding-left:18px;}
+.msg-num{font-size:11px;color:#AFA9EC;margin-bottom:5px;font-weight:500;}
+.msg-title{font-weight:500;font-size:15px;color:#26215C;margin-bottom:8px;}
+.msg-body{font-size:13px;color:#5F5E5A;line-height:1.6;}
+
+/* PERSONAS */
+.tier-label{font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;}
+.persona-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-bottom:20px;}
+.persona-card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px 14px;cursor:pointer;transition:border-color .15s;}
+.persona-card.active{background:#EEEDFE;border:2px solid #7F77DD;}
+.persona-abbr{font-size:11px;font-weight:500;color:#534AB7;margin-bottom:3px;}
+.persona-name{font-size:13px;font-weight:500;color:#26215C;line-height:1.3;}
+.pain-panel{background:#fff;border:1px solid #e8e6f8;border-radius:12px;padding:20px 22px;margin-top:8px;}
+.pain-title{font-weight:500;font-size:15px;color:#26215C;margin-bottom:10px;}
+.pain-core{font-size:13px;color:#534AB7;font-weight:500;background:#EEEDFE;padding:8px 12px;border-radius:8px;line-height:1.5;margin-bottom:16px;}
+.pain-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.pain-col-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:#888;margin-bottom:8px;}
+.pain-list{list-style:none;padding:0;margin:0;}
+.pain-list li{font-size:13px;color:#1a1a1a;line-height:1.5;padding:3px 0 3px 16px;position:relative;}
+.pain-list li::before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;background:#AFA9EC;}
+.pain-list.impact li::before{background:#D4537E;}
+.unifying{background:#26215C;border-radius:12px;padding:18px 22px;margin-top:14px;}
+.unifying-title{font-size:13px;font-weight:500;color:#CECBF6;margin-bottom:10px;}
+.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+.pill{font-size:12px;padding:4px 12px;border-radius:20px;}
+.pill-purple{background:#3C3489;color:#CECBF6;}
+.pill-green{background:#085041;color:#5DCAA5;}
+.unifying-text{font-size:13px;color:#AFA9EC;line-height:1.5;border-top:1px solid #3C3489;padding-top:10px;}
+.value-bar{background:#0F6E56;border-radius:12px;padding:16px 22px;margin-top:10px;}
+.value-label{font-size:11px;font-weight:500;color:#9FE1CB;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;}
+
+/* ACTIVATION */
+.act-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;}
+.funnel-item{display:flex;gap:14px;align-items:stretch;}
+.funnel-dot-col{display:flex;flex-direction:column;align-items:center;width:18px;flex-shrink:0;}
+.funnel-dot{width:14px;height:14px;border-radius:50%;margin-top:16px;flex-shrink:0;}
+.funnel-line{width:2px;flex:1;background:#e0ddf5;margin:3px 0;}
+.funnel-card{flex:1;background:#fff;border:1px solid #e8e6f8;border-radius:10px;padding:12px 16px;margin-bottom:6px;}
+.funnel-head{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+.funnel-stage{font-weight:500;font-size:13px;color:#26215C;}
+.funnel-detail{font-size:11px;color:#888780;line-height:1.5;margin-bottom:2px;}
+.funnel-detail span{color:#534AB7;font-weight:500;}
+.cal-wrap{border:1px solid #e8e6f8;border-radius:12px;overflow:hidden;}
+.cal-head{display:grid;grid-template-columns:110px 100px 1fr;background:#EEEDFE;padding:8px 14px;gap:10px;}
+.cal-head div{font-size:11px;font-weight:500;color:#3C3489;}
+.cal-body{max-height:400px;overflow-y:auto;}
+.cal-row{display:grid;grid-template-columns:110px 100px 1fr;padding:8px 14px;gap:10px;align-items:center;border-top:1px solid #f0eef8;}
+.cal-row.even{background:#fff;}
+.cal-row.odd{background:#fbfaff;}
+.cal-date{font-size:11px;color:#888780;}
+.cal-plat{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:500;}
+.cal-content{font-size:11px;color:#26215C;font-weight:500;line-height:1.4;}
+.cal-detail{color:#888780;font-weight:400;}
+
+/* CAROUSEL */
+.carousel-section{margin-bottom:52px;}
+.carousel-header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:20px;}
+.filter-row{display:flex;flex-wrap:wrap;gap:4px;}
+.filter-btn{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:500;border:1px solid #e0ddf5;background:transparent;color:#534AB7;cursor:pointer;}
+.filter-btn.active{background:#7F77DD;color:#fff;border-color:#7F77DD;}
+.carousel-wrap{position:relative;}
+.carousel-track{display:flex;gap:16px;overflow-x:auto;padding:4px 4px 12px;cursor:grab;scrollbar-width:none;user-select:none;}
+.carousel-track::-webkit-scrollbar{display:none;}
+.carousel-track.grabbing{cursor:grabbing;}
+.carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:10;width:32px;height:32px;border-radius:50%;border:1px solid #CECBF6;background:#fff;font-size:16px;color:#534AB7;display:flex;align-items:center;justify-content:center;}
+.carousel-arrow.left{left:-16px;}
+.carousel-arrow.right{right:-16px;}
+.carousel-empty{padding:24px 0;font-size:13px;color:#888780;}
+
+/* ASSET CARD */
+.asset-card{flex-shrink:0;width:280px;display:flex;flex-direction:column;background:#fff;border:1px solid #e8e6f8;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(83,74,183,.06);}
+.asset-img{height:140px;overflow:hidden;background:#EEEDFE;flex-shrink:0;}
+.asset-img img{width:100%;height:100%;object-fit:cover;}
+.asset-img-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#26215C,#534AB7);display:flex;align-items:center;justify-content:center;color:#CECBF6;font-size:12px;}
+.asset-body{padding:12px 14px;flex:1;display:flex;flex-direction:column;gap:6px;}
+.asset-tags{display:flex;flex-wrap:wrap;}
+.asset-title{font-weight:500;font-size:13px;color:#26215C;line-height:1.4;flex:1;}
+.asset-desc{font-size:11px;color:#888780;line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.asset-cta{font-size:11px;color:#534AB7;font-weight:500;margin-top:2px;}
+
+/* INTERNAL */
+.sp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;}
+.sp-card{background:#fff;border:1px solid #e8e6f8;border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;}
+.sp-top{display:flex;align-items:center;justify-content:space-between;}
+.sp-icon{font-size:20px;}
+.sp-title{font-weight:500;font-size:13px;color:#26215C;}
+.sp-desc{font-size:11px;color:#888780;line-height:1.4;flex:1;}
+.sp-cta{font-size:11px;color:#534AB7;font-weight:500;}
+
+/* REGIONAL */
+.region-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
+.region-card{background:#fff;border:1px solid #e8e6f8;border-radius:12px;overflow:hidden;}
+.region-head{background:#26215C;padding:14px 18px;display:flex;align-items:center;gap:10px;}
+.region-head span.icon{font-size:18px;}
+.region-head span.name{font-weight:500;font-size:15px;color:#fff;}
+.region-body{padding:16px 18px;}
+.region-focus-label{font-size:12px;font-weight:500;color:#534AB7;margin-bottom:4px;}
+.region-focus{font-size:12px;color:#5F5E5A;line-height:1.5;margin-bottom:12px;}
+.region-assets-label{font-size:12px;font-weight:500;color:#534AB7;margin-bottom:6px;}
+.region-assets{margin:0;padding-left:16px;font-size:12px;color:#5F5E5A;line-height:1.8;}
+.region-tip{margin-top:12px;background:#EEEDFE;border-radius:6px;padding:8px 10px;font-size:11px;color:#3C3489;}
+
+/* QUICK ACCESS */
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.qa-label{font-size:11px;letter-spacing:1px;color:#AFA9EC;text-transform:uppercase;margin-bottom:10px;}
+.qa-link{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #3C3489;}
+.qa-link .qa-icon{font-size:12px;}
+.qa-link .qa-title{font-size:13px;color:#DDDAF8;flex:1;}
+.qa-link .qa-arrow{font-size:11px;color:#534AB7;}
+</style>
+</head>
+<body>
+
+<div id="nav">
+  <div id="nav-inner">
+    <div id="nav-brand"><div class="dot"></div><span>E&amp;G Campaign 2026</span></div>
+    <button class="nav-btn active" onclick="scrollTo('hero')">Overview</button>
+    <button class="nav-btn" onclick="scrollTo('messaging')">Messaging</button>
+    <button class="nav-btn" onclick="scrollTo('personas')">Personas</button>
+    <button class="nav-btn" onclick="scrollTo('activation')">Activation</button>
+    <button class="nav-btn" onclick="scrollTo('content')">Content</button>
+    <button class="nav-btn" onclick="scrollTo('internal')">Internal</button>
+    <button class="nav-btn" onclick="scrollTo('regional')">Regional</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div id="hero">
+  <div id="hero-inner">
+    <div class="hero-badges">
+      <span class="hero-badge">Energy &amp; Utilities</span>
+      <span class="hero-badge">IFS Copperleaf AIP</span>
+      <span class="hero-badge">Always-On 2026</span>
+      <span class="hero-badge">Europe · APJMEA · AMER</span>
+    </div>
+    <h1>Global Always-On Electricity &amp; Gas Campaign</h1>
+    <p>A centralized portfolio for IFS Copperleaf marketing and sales teams — campaign strategy, messaging, activation guidance, and every asset in one place.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="k">Objective</div><div class="v">Brand Awareness + Lead Gen</div></div>
+      <div class="hero-meta-item"><div class="k">Duration</div><div class="v">Always-On, Full Year 2026</div></div>
+      <div class="hero-meta-item"><div class="k">Solution</div><div class="v">IFS Copperleaf AIP + ALM Platform</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- IDC BAND -->
+<div id="idc-band">
+  <div class="inner">
+    <div class="idc-top">
+      <div>
+        <div class="idc-label">IDC Business Value Report</div>
+        <div class="idc-title">The Data Is Clear: Utilities That Modernise Capital Planning Outperform</div>
+        <div class="idc-sub">Independent research quantifying the ROI of advanced decision intelligence for utilities.</div>
+      </div>
+      <a href="https://www.copperleaf.com/knowledge-hub/idc-business-value-report/" target="_blank" class="idc-btn">Download Report →</a>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-n">469%</div><div class="stat-l">Three-year ROI with an 11-month payback</div></div>
+      <div class="stat-card"><div class="stat-n">$17.5M</div><div class="stat-l">Average annual benefits per organisation</div></div>
+      <div class="stat-card"><div class="stat-n">17%</div><div class="stat-l">More efficient capital planning teams</div></div>
+      <div class="stat-card"><div class="stat-n">55%</div><div class="stat-l">Greater efficiency shifting capital across priorities</div></div>
+      <div class="stat-card"><div class="stat-n">18%</div><div class="stat-l">Improvement in asset manager productivity</div></div>
+      <div class="stat-card"><div class="stat-n">3%</div><div class="stat-l">Increase in total economic value of the capital portfolio</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ENTRY POINTS -->
+<div class="section section-white">
+  <div class="section-inner">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+      <div class="sh-bar"></div>
+      <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7F77DD;font-weight:500;">Primary Campaign Destinations</span>
+    </div>
+    <h2 class="sh-title" style="margin-bottom:6px;">Campaign Entry Points</h2>
+    <p class="sh-sub" style="margin-bottom:28px;">The primary public-facing destinations for this campaign. Share these first.</p>
+    <div class="entry-grid">
+      <a href="https://www.copperleaf.com/landing-page/grid-to-great/" target="_blank" class="entry-card">
+        <div class="entry-img">
+          <img src="https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2024/10/1520x350_GridtoGreat_1200x350-1200x350.jpg" alt="Grid to Great"/>
+          <div class="entry-overlay"></div>
+          <div class="entry-tags"><span class="tag" style="background:#99355622;color:#993556;border:1px solid #99355644;">Landing Page</span><span class="tag" style="background:#7F77DD22;color:#7F77DD;border:1px solid #7F77DD44;">TOFU</span></div>
+        </div>
+        <div class="entry-body">
+          <div class="entry-title">Go From Grid to Great</div>
+          <div class="entry-desc">The campaign's primary public landing page. Drives awareness and lead capture for grid modernisation priorities across all regions.</div>
+          <div class="entry-cta">Visit landing page →</div>
+        </div>
+      </a>
+      <a href="https://engage.copperleaf.com/364934" target="_blank" class="entry-card">
+        <div class="entry-img">
+          <img src="https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2026/03/elec-blog-4-banner-.png" alt="Folloze"/>
+          <div class="entry-overlay2"></div>
+          <div class="entry-center"><span>Personalised ABM Experience</span></div>
+          <div class="entry-tags"><span class="tag" style="background:#534AB722;color:#534AB7;border:1px solid #534AB744;">Folloze</span><span class="tag" style="background:#534AB722;color:#534AB7;border:1px solid #534AB744;">MOFU</span></div>
+        </div>
+        <div class="entry-body">
+          <div class="entry-title">Folloze Campaign Hub</div>
+          <div class="entry-desc">Interactive Folloze experience for ABM and nurture — personalised asset delivery for target accounts across all regions.</div>
+          <div class="entry-cta">Open Folloze hub →</div>
+        </div>
+      </a>
+      <a href="https://www.copperleaf.com/knowledge-hub/idc-business-value-report/" target="_blank" class="entry-card featured">
+        <div class="entry-img">
+          <img src="https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/11/IDC-Business-Value-Report-3-1920x500.png" alt="IDC Report"/>
+          <div class="entry-overlay3"></div>
+          <div class="entry-badge">FEATURED REPORT</div>
+          <div class="entry-tags"><span class="tag" style="background:#26215C22;color:#26215C;border:1px solid #26215C44;">Report</span><span class="tag" style="background:#534AB722;color:#534AB7;border:1px solid #534AB744;">MOFU</span></div>
+        </div>
+        <div class="entry-body">
+          <div class="entry-title">IDC Business Value Report</div>
+          <div class="entry-desc">Independent research proving the ROI of advanced asset investment planning for utilities. Key proof point for sales conversations.</div>
+          <div class="entry-cta">Download report →</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="section">
+  <div class="section-inner">
+    <div class="overview-grid">
+      <div class="card">
+        <div class="sh-wrap"><div class="sh-bar"></div><h2 class="sh-title">Campaign at a Glance</h2></div>
+        <table class="glance-table">
+          <tr><td>Campaign</td><td>Electricity &amp; Gas Utilities</td></tr>
+          <tr><td>Objective</td><td>Brand Awareness + Lead Generation</td></tr>
+          <tr><td>Duration</td><td>Always-On, Full Year 2026</td></tr>
+          <tr><td>Regions</td><td>Europe, APJMEA, AMER</td></tr>
+          <tr><td>Sub-vertical</td><td>Energy &amp; Utilities</td></tr>
+          <tr><td>Solution</td><td>IFS Copperleaf AIP + IFS ALM Platform</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="sh-wrap"><div class="sh-bar"></div><h2 class="sh-title">Key Industry Challenges</h2><p class="sh-sub">The pain points this campaign addresses</p></div>
+    <div class="challenge-grid">
+      <div class="challenge-card"><div class="challenge-icon">⚡</div><div class="challenge-title">Decarbonisation Pressure</div><div class="challenge-desc">Rising mandates to modernise grid infrastructure while maintaining reliability.</div></div>
+      <div class="challenge-card"><div class="challenge-icon">🔗</div><div class="challenge-title">Siloed Data &amp; Legacy Systems</div><div class="challenge-desc">Disconnected platforms hinder investment prioritisation and slow decisions.</div></div>
+      <div class="challenge-card"><div class="challenge-icon">🏗️</div><div class="challenge-title">Aging Assets &amp; Outage Risk</div><div class="challenge-desc">Aging infrastructure increases outage risk, non-compliance, and unplanned costs.</div></div>
+      <div class="challenge-card"><div class="challenge-icon">📋</div><div class="challenge-title">Regulatory Transparency</div><div class="challenge-desc">Growing demand for traceability, ESG alignment, and defensible capital plans.</div></div>
+      <div class="challenge-card"><div class="challenge-icon">💰</div><div class="challenge-title">Tight Budgets &amp; ROI Pressure</div><div class="challenge-desc">Constrained budgets require defensible, value-based decisions that maximise return.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MESSAGING -->
+<div id="messaging" class="section section-white">
+  <div class="section-inner">
+    <div class="sh-wrap"><div class="sh-bar"></div><h2 class="sh-title">Core Campaign Messages</h2><p class="sh-sub">Three pillars that anchor all campaign content</p></div>
+    <div class="msg-grid">
+      <div class="msg-item"><div class="msg-num">Message 01</div><div class="msg-title">Make Smarter, Value-Based Decisions</div><div class="msg-body">Align every investment with cost, risk, and performance trade-offs. Build defensible, data-driven capital plans that maximise value across your asset portfolio.</div></div>
+      <div class="msg-item"><div class="msg-num">Message 02</div><div class="msg-title">Gain Full Transparency and Traceability</div><div class="msg-body">Build regulatory-ready capital and O&amp;M plans. Give regulators, boards, and stakeholders the evidence they need — with full auditability and ESG alignment built in.</div></div>
+      <div class="msg-item"><div class="msg-num">Message 03</div><div class="msg-title">Deliver Measurable Outcomes</div><div class="msg-body">Balance reliability, sustainability, and ROI. Demonstrate the impact of every investment decision with clear, quantifiable outcomes that build long-term confidence.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PERSONAS -->
+<div id="personas" class="section section-light">
+  <div class="section-inner">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;"><div class="sh-bar"></div><span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7F77DD;font-weight:500;">Target Audience</span></div>
+    <h2 class="sh-title" style="margin-bottom:4px;">Persona Pain Chain</h2>
+    <p class="sh-sub" style="margin-bottom:28px;">Select any persona to explore their core challenges and downstream business impact in the Electricity &amp; Gas sector.</p>
+    <div id="persona-tiers"></div>
+    <div class="pain-panel" id="pain-panel">
+      <div class="pain-title" id="pain-title"></div>
+      <div class="pain-core" id="pain-core"></div>
+      <div class="pain-cols">
+        <div><div class="pain-col-label">Challenges</div><ul class="pain-list" id="pain-challenges"></ul></div>
+        <div><div class="pain-col-label">Business impact</div><ul class="pain-list impact" id="pain-impact"></ul></div>
+      </div>
+    </div>
+    <div class="unifying">
+      <div class="unifying-title">The unifying problem — across all personas</div>
+      <div class="pill-row"><span class="pill pill-purple">Decisions made in silos</span><span class="pill pill-purple">Value not consistently defined</span><span class="pill pill-purple">Trade-offs unclear</span><span class="pill pill-purple">Risk not quantified</span></div>
+      <div class="unifying-text">Electricity and gas utilities cannot confidently align capital investment decisions with long-term outcomes — reliability, affordability, decarbonisation, and regulatory resilience — because risk, value, and trade-offs are never consistently defined or visible.</div>
+    </div>
+    <div class="value-bar" style="margin-top:10px;">
+      <div class="value-label">IFS Copperleaf — value-based approach</div>
+      <div class="pill-row"><span class="pill pill-green">Align investment with strategy</span><span class="pill pill-green">Quantify risk, cost &amp; ESG</span><span class="pill pill-green">Optimise capital plans</span><span class="pill pill-green">Defend plans to regulators</span><span class="pill pill-green">Demonstrate measurable outcomes</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVATION -->
+<div id="activation" class="section">
+  <div class="section-inner">
+    <div class="act-grid">
+      <div>
+        <div class="sh-wrap"><div class="sh-bar"></div><h2 class="sh-title">Campaign Activation Flow</h2><p class="sh-sub">From first impression to sales conversation</p></div>
+        <div id="funnel"></div>
+      </div>
+      <div>
+        <div class="sh-wrap"><div class="sh-bar"></div><h2 class="sh-title">Campaign Calendar</h2><p class="sh-sub">Scheduled activations — Full Year 2026</p></div>
+        <div class="cal-wrap">
+          <div class="cal-head"><div>Date</div><div>Platform</div><div>Content</div></div>
+          <div class="cal-body" id="calendar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div id="content" class="section section-white">
+  <div class="section-inner">
+    <div class="carousel-section">
+      <div class="carousel-header">
+        <div><div class="sh-bar"></div><h2 class="sh-title" style="margin-bottom:4px;">Knowledge Hub</h2><p class="sh-sub">Case studies, webinars, and white papers — scroll or drag to browse</p></div>
+        <div class="filter-row" id="kh-filters"></div>
+      </div>
+      <div class="carousel-wrap">
+        <button class="carousel-arrow left" onclick="scrollCarousel('kh-track',-300)">‹</button>
+        <div class="carousel-track" id="kh-track"></div>
+        <button class="carousel-arrow right" onclick="scrollCarousel('kh-track',300)">›</button>
+      </div>
+    </div>
+    <div class="carousel-section">
+      <div class="carousel-header">
+        <div><div class="sh-bar green"></div><h2 class="sh-title" style="margin-bottom:4px;">Published Blog Posts</h2><p class="sh-sub" id="blog-count"></p></div>
+        <div class="filter-row" id="blog-filters"></div>
+      </div>
+      <div class="carousel-wrap">
+        <button class="carousel-arrow left" onclick="scrollCarousel('blog-track',-300)">‹</button>
+        <div class="carousel-track" id="blog-track"></div>
+        <button class="carousel-arrow right" onclick="scrollCarousel('blog-track',300)">›</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INTERNAL -->
+<div id="internal" class="section section-light">
+  <div class="section-inner">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><div class="sh-bar gray"></div><span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#5F5E5A;font-weight:500;">Internal Access Only</span></div>
+    <h2 class="sh-title" style="margin-bottom:4px;">SharePoint Asset Library</h2>
+    <p class="sh-sub" style="margin-bottom:24px;">Working files, creative assets, and campaign materials — accessible to IFS Copperleaf team members only.</p>
+    <div class="sp-grid" id="sp-grid"></div>
+  </div>
+</div>
+
+<!-- REGIONAL -->
+<div id="regional" class="section">
+  <div class="section-inner">
+    <div class="sh-wrap"><div class="sh-bar"></div><h2 class="sh-title">Regional Activation Guidance</h2><p class="sh-sub">How to localise this campaign for each market</p></div>
+    <div class="region-grid">
+      <div class="region-card"><div class="region-head"><span class="icon">🇪🇺</span><span class="name">Europe</span></div><div class="region-body"><div class="region-focus-label">Key Focus</div><div class="region-focus">EU decarbonisation directives, grid modernisation, regulatory transparency mandates</div><div class="region-assets-label">Recommended Assets</div><ul class="region-assets"><li>ESG &amp; regulatory-focused blogs</li><li>Compliance white papers</li><li>LinkedIn campaigns targeting UK/DACH/Nordics</li><li>Elia &amp; Enexis client testimonial videos</li></ul><div class="region-tip"><b>Local tip:</b> Localise Marketo nurture sequences for key EU markets and align with regional regulatory timelines.</div></div></div>
+      <div class="region-card"><div class="region-head"><span class="icon">🌏</span><span class="name">APJMEA</span></div><div class="region-body"><div class="region-focus-label">Key Focus</div><div class="region-focus">Rapid grid expansion, energy transition, infrastructure investment growth</div><div class="region-assets-label">Recommended Assets</div><ul class="region-assets"><li>Grid modernisation blogs</li><li>ROI tools</li><li>Powerco client testimonial video</li><li>Regional case studies</li></ul><div class="region-tip"><b>Local tip:</b> Adapt messaging for energy transition and sustainability investment priorities.</div></div></div>
+      <div class="region-card"><div class="region-head"><span class="icon">🌎</span><span class="name">AMER</span></div><div class="region-body"><div class="region-focus-label">Key Focus</div><div class="region-focus">Aging grid infrastructure, public accountability, capital planning transparency</div><div class="region-assets-label">Recommended Assets</div><ul class="region-assets"><li>Public sector case studies</li><li>ROI tools</li><li>ABM outreach for key utility accounts</li><li>Demo CTAs and investment workshop invites</li></ul><div class="region-tip"><b>Local tip:</b> Leverage ABM alongside sales for key utility accounts and strategic investment workshops.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK ACCESS -->
+<div class="section-darkest" style="padding:44px 24px;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="margin-bottom:20px;"><div class="sh-bar light"></div><h2 style="font-size:20px;font-weight:500;color:#fff;margin:0;">Quick Access Links</h2></div>
+    <div class="qa-grid">
+      <div>
+        <div class="qa-label">SharePoint Folders</div>
+        <a href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/Assets/Blogs?csf=1&web=1&e=raI86b" target="_blank" class="qa-link"><span class="qa-icon">📝</span><span class="qa-title">Blogs</span><span class="qa-arrow">→</span></a>
+        <a href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/Assets/Lead%20Uploads?csf=1&web=1&e=jDCxlb" target="_blank" class="qa-link"><span class="qa-icon">📤</span><span class="qa-title">Lead Uploads</span><span class="qa-arrow">→</span></a>
+        <a href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/Assets/Videos?csf=1&web=1&e=SGJBHK" target="_blank" class="qa-link"><span class="qa-icon">🎬</span><span class="qa-title">Videos</span><span class="qa-arrow">→</span></a>
+        <a href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/Demandbase?csf=1&web=1&e=NwDF6C" target="_blank" class="qa-link"><span class="qa-icon">🎯</span><span class="qa-title">Demandbase</span><span class="qa-arrow">→</span></a>
+        <a href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/Landing%20Pages?csf=1&web=1&e=efwKKu" target="_blank" class="qa-link"><span class="qa-icon">🌐</span><span class="qa-title">Landing Pages</span><span class="qa-arrow">→</span></a>
+        <a href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/LinkedIn?csf=1&web=1&e=6EScxb" target="_blank" class="qa-link"><span class="qa-icon">💼</span><span class="qa-title">LinkedIn</span><span class="qa-arrow">→</span></a>
+        <a href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/Marketo?csf=1&web=1&e=qtsy8u" target="_blank" class="qa-link"><span class="qa-icon">✉️</span><span class="qa-title">Marketo</span><span class="qa-arrow">→</span></a>
+        <a href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/Other?csf=1&web=1&e=suUn1p" target="_blank" class="qa-link"><span class="qa-icon">📁</span><span class="qa-title">Other</span><span class="qa-arrow">→</span></a>
+      </div>
+      <div>
+        <div class="qa-label">Public Destinations</div>
+        <a href="https://www.copperleaf.com/landing-page/grid-to-great/" target="_blank" class="qa-link"><span class="qa-title">Go From Grid to Great</span><span class="qa-arrow">↗</span></a>
+        <a href="https://engage.copperleaf.com/364934" target="_blank" class="qa-link"><span class="qa-title">Folloze Campaign Hub</span><span class="qa-arrow">↗</span></a>
+        <a href="https://www.copperleaf.com/knowledge-hub/idc-business-value-report/" target="_blank" class="qa-link"><span class="qa-title">IDC Business Value Report</span><span class="qa-arrow">↗</span></a>
+        <a href="https://www.copperleaf.com/knowledge-hub/" target="_blank" class="qa-link"><span class="qa-title">IFS Copperleaf Knowledge Hub</span><span class="qa-arrow">↗</span></a>
+        <a href="https://www.copperleaf.com/blog/" target="_blank" class="qa-link"><span class="qa-title">IFS Copperleaf Blog</span><span class="qa-arrow">↗</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-footer"><p>IFS Copperleaf · Global Electricity &amp; Gas Campaign · Internal Use Only · Always-On 2026</p></div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const typeBadge={Blog:"#0F6E56",Video:"#3C3489","Case Study":"#185FA5",Webinar:"#854F0B","White Paper":"#3B6D11","Landing Page":"#993556",Folloze:"#534AB7",Report:"#26215C",Folder:"#5F5E5A"};
+const stageColor={TOFU:"#7F77DD",MOFU:"#534AB7",BOFU:"#26215C"};
+
+const personaTiers=[
+  {label:"Executive & Strategic Leadership",personas:[{id:"ceo",abbr:"CEO / MD",name:"Chief Executive"},{id:"cfo",abbr:"CFO",name:"Chief Financial Officer"},{id:"coo",abbr:"COO",name:"Chief Operating Officer"},{id:"cso",abbr:"CSO",name:"Chief Sustainability Officer"},{id:"cdo",abbr:"CDO / CIO",name:"Chief Digital Officer"},{id:"cto",abbr:"CTO",name:"Chief Transformation Officer"}]},
+  {label:"Strategic & Planning Leadership",personas:[{id:"vp_am",abbr:"VP / Director",name:"Asset Management"},{id:"cap_plan",abbr:"Head of",name:"Capital Planning"},{id:"portfolio",abbr:"PM",name:"Portfolio Manager"},{id:"reg",abbr:"Reg / Strategy",name:"Regulatory Lead"}]},
+  {label:"Operational & Technical Stakeholders",personas:[{id:"asset_mgr",abbr:"AM",name:"Asset Manager"},{id:"ops",abbr:"M&O",name:"Maintenance & Operations"},{id:"eng",abbr:"Eng",name:"Engineer / Reliability Lead"},{id:"risk",abbr:"R&C",name:"Risk & Compliance Manager"}]},
+];
+const personaPains={
+  ceo:{title:"CEO / Managing Director",core:'Unable to confidently answer: "Are we investing in the right assets to deliver long-term grid resilience, decarbonisation targets, and regulatory outcomes?"',challenges:["No visibility into long-term risk exposure and investment impact across the grid","Difficulty aligning capital plans with decarbonisation and net zero commitments","Regulatory price control pressure with limited ability to defend investment plans","Trade-offs between reliability, affordability, and sustainability remain opaque"],impact:["Delayed or reduced regulatory funding approvals","Missed decarbonisation and resilience targets","Erosion of stakeholder, investor, and public trust"]},
+  cfo:{title:"CFO — Chief Financial Officer",core:"No consistent framework to evaluate and compare electricity and gas investments against financial, risk, and ESG objectives.",challenges:["No common language between finance, engineering, and grid operations","Difficulty justifying capital budgets and rate cases to regulators and boards","Cannot compare decarbonisation investments against business-as-usual grid maintenance","Limited forward visibility into long-term capital needs"],impact:["Poor capital efficiency across the asset portfolio","Over- or under-investment in critical grid infrastructure","Reduced confidence in funding and rate-case decisions"]},
+  coo:{title:"COO — Chief Operating Officer",core:"Operational resilience targets are undermined by fragmented planning and reactive asset management across electricity and gas networks.",challenges:["Inability to balance cost efficiency with grid reliability and outage prevention","Limited forward visibility into asset-driven operational risk","Planning cycles too slow to respond to grid emergencies or energy transition demands","Siloed data between network operations and capital planning teams"],impact:["Increased unplanned outages and grid disruptions","Higher operational costs from reactive emergency responses","Missed service reliability and continuity commitments"]},
+  cso:{title:"CSO — Chief Sustainability Officer",core:"Decarbonisation and ESG commitments cannot be translated into defensible capital investment decisions across the electricity and gas portfolio.",challenges:["ESG and net zero targets not integrated into investment prioritisation frameworks","Difficulty modelling climate risk, grid hardening, and energy transition pathways","No consistent method to compare sustainability value of competing capital projects","ESG reporting requirements not linked to investment decision data"],impact:["Missed net zero, decarbonisation, and resilience targets","Reputational and regulatory risk from unmet sustainability commitments","Loss of green financing and regulatory goodwill"]},
+  cdo:{title:"CDO / CIO — Chief Digital Officer",core:"Digital transformation investments in grid modernisation cannot demonstrate clear linkage to reliability or financial outcomes.",challenges:["Siloed data systems across asset management, finance, and grid operations","No unified platform for capital decision analytics","Difficulty driving adoption of data-driven planning in engineering teams","Legacy tools limiting scenario modelling and grid investment optimisation"],impact:["Digital and grid modernisation initiatives fail to deliver expected value","Low confidence in data-driven investment decisions","Slow energy transition and grid transformation programme velocity"]},
+  cto:{title:"CTO — Chief Transformation Officer",core:"Grid transformation initiatives lack a value framework for prioritising capital investment and demonstrating measurable outcomes.",challenges:["Fragmented transformation programmes without unified criteria for grid investment value","Resistance from grid operations teams without a shared investment language","Difficulty demonstrating ROI of grid modernisation and digitalisation investments","Capital plans not connected to long-term asset condition and risk strategy"],impact:["Transformation fatigue and low adoption across network operations","Inability to justify continued investment in grid modernisation","Missed strategic outcomes from energy transition programmes"]},
+  vp_am:{title:"VP / Director — Asset Management",core:"Cannot build a defensible plan that balances cost, risk, and reliability performance across the full electricity or gas network asset base.",challenges:["Siloed planning between electricity distribution, transmission, and gas assets","No long-term view (10–40 years) of grid asset condition and investment needs","Difficulty modelling climate risk and grid resilience scenarios","Time-consuming, manual capital planning cycles that limit strategic agility"],impact:["Reactive interventions instead of proactive, risk-based grid investment","Inconsistent delivery of reliability and service targets","Capital plans that cannot be funded or executed at programme scale"]},
+  cap_plan:{title:"Head of Capital Planning",core:"Capital plans for electricity and gas networks are built on incomplete data and cannot be optimised against regulatory and budget constraints.",challenges:["No portfolio optimisation capability across competing grid investment options","Manual scenario modelling limits speed, accuracy, and defensibility of plans","Difficulty integrating risk, condition, cost, and regulatory performance data","Inconsistent prioritisation criteria applied across planning teams"],impact:["Suboptimal capital allocation across network asset classes","Plans rejected or reduced during regulatory price control reviews","Inability to respond quickly to budget changes or emergency reprioritisation"]},
+  portfolio:{title:"Portfolio Manager",core:"No consistent framework to evaluate and rank projects across an electricity and gas investment portfolio with competing risk, cost, and value drivers.",challenges:["Competing grid investment priorities with no objective, value-based ranking methodology","Difficulty demonstrating portfolio-level risk exposure to senior leadership","Limited scenario analysis for regulatory constraint and budget change modelling","Inconsistent data inputs from electricity, gas, and renewables asset classes"],impact:["High-value grid resilience or safety projects deprioritised","Portfolio-level risk not visible to boards or regulators","Funding decisions made on incomplete or subjective information"]},
+  reg:{title:"Regulatory / Strategy Lead",core:"Unable to clearly communicate, evidence, and defend grid investment decisions during regulatory price control submissions.",challenges:["Subjective or inconsistent risk and condition assessments across asset types","Limited ability to quantify network risk exposure in financial or societal terms","Difficulty demonstrating impact of regulatory funding reductions on grid reliability","No complete audit trail linking investment proposals to strategic and safety objectives"],impact:["Increased regulatory scrutiny during price control reviews","Longer regulatory approval cycles and plan resubmissions","Reduced or delayed funding approvals for critical grid investments"]},
+  asset_mgr:{title:"Asset Manager",core:"Managing electricity or gas network assets without adequate forward visibility — bearing the consequences of upstream planning failures.",challenges:["High levels of reactive maintenance across aging electricity and gas infrastructure","Increasing asset failure rates as grid assets approach or exceed design life","No predictive, risk-based scoring to prioritise interventions cost-effectively","Limited input into the capital planning process despite operational knowledge"],impact:["Increased asset failures, outage events, and safety incidents","Higher maintenance costs from reactive rather than risk-based interventions","Asset performance and remaining life below target expectations"]},
+  ops:{title:"Maintenance & Operations Leader",core:"Operational teams bear the cost and complexity of grid decisions made upstream without operational or reliability input.",challenges:["Resource constraints and inefficient scheduling across dispersed grid infrastructure","Poor data linkage between work orders, asset condition, and grid performance","Reactive workload driven by inadequate capital planning and risk prioritisation","Limited advance visibility of planned capital interventions and network outages"],impact:["Higher OPEX from reactive emergency and corrective maintenance","Reduced workforce efficiency and increased operational risk","Unpredictable workload spikes that undermine network performance"]},
+  eng:{title:"Engineer / Reliability Lead",core:"Technical engineering knowledge of grid asset condition and failure risk is not consistently translated into investment priorities.",challenges:["Engineering judgement on reliability risk overridden by non-technical decision makers","No consistent framework to express asset condition and failure risk in financial terms","Difficulty influencing capital planning with technical and reliability data","Inconsistent condition assessment standards across electricity and gas asset types"],impact:["Poor investment decisions on critical reliability or safety assets","Reliability and safety issues not identified until failure or incident","Technical teams disengaged and underutilised in the planning process"]},
+  risk:{title:"Risk & Compliance Manager",core:"Risk assessments for electricity and gas network assets are inconsistent and not connected to capital investment or operational decisions.",challenges:["No enterprise risk framework for electricity and gas infrastructure investment","Qualitative risk assessments that vary by team, region, or asset type","Difficulty demonstrating regulatory compliance and safety case alignment","Limited ability to model risk reduction outcomes from alternative investment scenarios"],impact:["Unquantified and undefended risk exposure at board and regulatory level","Regulatory non-compliance events and licence conditions breaches","Inability to prioritise and evidence risk mitigation investment decisions"]},
+};
+
+const spFolders=[
+  {title:"Blogs",icon:"📝",url:"https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/Assets/Blogs?csf=1&web=1&e=raI86b",desc:"Blog drafts and published copies"},
+  {title:"Lead Uploads",icon:"📤",url:"https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/Assets/Lead%20Uploads?csf=1&web=1&e=jDCxlb",desc:"Gated asset lead upload files"},
+  {title:"Videos",icon:"🎬",url:"https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/Assets/Videos?csf=1&web=1&e=SGJBHK",desc:"Client testimonial and video files"},
+  {title:"Demandbase",icon:"🎯",url:"https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/Demandbase?csf=1&web=1&e=NwDF6C",desc:"Display ad creatives and setup"},
+  {title:"Landing Pages",icon:"🌐",url:"https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/Landing%20Pages?csf=1&web=1&e=efwKKu",desc:"Landing page source files and copy"},
+  {title:"LinkedIn",icon:"💼",url:"https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/LinkedIn?csf=1&web=1&e=6EScxb",desc:"Sponsored content and carousel assets"},
+  {title:"Marketo",icon:"✉️",url:"https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/Marketo?csf=1&web=1&e=qtsy8u",desc:"Email nurture sequences and templates"},
+  {title:"Other",icon:"📁",url:"https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Electricity%20and%20Gas%20Utilities/Other?csf=1&web=1&e=suUn1p",desc:"Miscellaneous campaign materials"},
+];
+
+const khAssets=[
+  {title:"Webinar: Navigating the Energy Transition — Alliander's AIP Journey",url:"https://www.copperleaf.com/knowledge-hub/webinar-navigating-the-energy-transition-allianders-asset-investment-planning-journey/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/09/1920x500_transmissiontower-v1-1.webp",type:"Webinar",stage:"MOFU",region:"Europe",desc:"How Alliander is transforming its investment planning process to navigate the energy transition at scale."},
+  {title:"Case Study: Powering Success at Alabama Power",url:"https://www.copperleaf.com/knowledge-hub/powering-success-at-alabama-power/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/09/1920x500_solarenergy-v2.webp",type:"Case Study",stage:"BOFU",region:"AMER",desc:"How Alabama Power uses IFS Copperleaf AIP to improve capital efficiency and asset performance."},
+  {title:"Webinar: Optimal Substation Asset Planning at Baltimore Gas & Electric",url:"https://www.copperleaf.com/knowledge-hub/webinar-case-study-optimal-substation-asset-planning-at-baltimore-gas-electric/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2024/07/1920x500_Enterprise0724.webp",type:"Webinar",stage:"MOFU",region:"AMER",desc:"BG&E shares how data-driven substation planning reduced risk and improved regulatory alignment."},
+  {title:"Hydro One: Creating Investment Plans that Build Stakeholder Trust",url:"https://www.copperleaf.com/knowledge-hub/hydro-one-case-study-creating-investment-plans-that-build-stakeholder-trust/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2024/07/1920x500_HydroOneCS01.webp",type:"Video",stage:"BOFU",region:"AMER",desc:"Hydro One explains how IFS Copperleaf enables defensible, transparent capital plans."},
+  {title:"Sustainable Asset Investment Planning at Endeavour Energy",url:"https://www.copperleaf.com/knowledge-hub/sustainable-asset-investment-planning-at-endeavour-energy/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/11/1920x500_Distribution.webp",type:"Case Study",stage:"BOFU",region:"APJMEA",desc:"Endeavour Energy's approach to integrating sustainability into capital planning decisions."},
+  {title:"Enexis: Optimised Portfolio Planning for the Energy Transition",url:"https://www.copperleaf.com/knowledge-hub/enexis-case-study-video/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2024/03/Enexis_Case_Study_Thumbnail-1.png",type:"Video",stage:"BOFU",region:"Europe",desc:"Enexis shares how IFS Copperleaf supports portfolio optimisation during rapid energy transition."},
+  {title:"Optimised Asset Investment Planning at NGET",url:"https://www.copperleaf.com/knowledge-hub/optimised-asset-investment-planning-and-management-at-nget/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/06/1920x500_electricaltransmission-v1-1.webp",type:"Case Study",stage:"BOFU",region:"Europe",desc:"National Grid Electricity Transmission uses AIP to optimise capital planning across a complex asset base."},
+  {title:"E-REDES: Charting a Course for Value with Copperleaf",url:"https://www.copperleaf.com/knowledge-hub/e-redes-charting-a-course-for-value-with-copperleaf/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/11/1920x500_Distribution.webp",type:"Case Study",stage:"BOFU",region:"Europe",desc:"Portugal's E-REDES demonstrates how value-based decisions improved capital planning outcomes."},
+  {title:"Webinar: Value-Based Decision Making at Enexis",url:"https://www.copperleaf.com/knowledge-hub/webinar-project-portfolio-management-value-based-decision-making-at-enexis/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/11/1920x500_Distribution.webp",type:"Webinar",stage:"MOFU",region:"Europe",desc:"Enexis walks through its project portfolio management approach using IFS Copperleaf."},
+  {title:"Case Study Video: Salt River Project",url:"https://www.copperleaf.com/knowledge-hub/case-study-video-salt-river-project/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2023/07/10-0206-04-0121-114874-1-1920x500.jpg",type:"Video",stage:"BOFU",region:"AMER",desc:"Salt River Project shares how IFS Copperleaf improved investment decision confidence and speed."},
+  {title:"Webinar: How National Grid Transformed Capital Work Planning",url:"https://www.copperleaf.com/knowledge-hub/webinar-case-study-how-national-grid-transformed-capital-work-planning/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/06/1920x500_electricalinsulator-v1-1.webp",type:"Webinar",stage:"MOFU",region:"Europe",desc:"National Grid explains how it modernised capital work planning with data-driven methodologies."},
+  {title:"Case Study: Multi-sector AIP at Rheinische NETZGesellschaft",url:"https://www.copperleaf.com/knowledge-hub/case-study-multi-sector-asset-investment-planning-and-management-at-rheinische-netzgesellschaft/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/09/1920x500_transmissiontower-v1.webp",type:"Case Study",stage:"BOFU",region:"Europe",desc:"How RNG manages multi-sector asset investment planning across electricity and gas networks."},
+  {title:"Planning the Energy Transition in the Asia Pacific Region",url:"https://www.copperleaf.com/knowledge-hub/planning-the-energy-transition-in-the-asia-pacific-region/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/09/planning-the-energy-transition.webp",type:"White Paper",stage:"TOFU",region:"APJMEA",desc:"A strategic look at how APAC utilities are approaching the energy transition."},
+  {title:"2022 Copperleaf Summit: National Grid Case Study",url:"https://www.copperleaf.com/knowledge-hub/2022-copperleaf-summit-national-grid-case-study/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/08/national-grid-blog-header.webp",type:"Video",stage:"BOFU",region:"Europe",desc:"National Grid presents its asset investment planning journey at the Copperleaf Summit."},
+  {title:"Case Study: Integrated AIP at National Gas Transmission",url:"https://www.copperleaf.com/knowledge-hub/case-study-an-integrated-asset-investment-planning-and-management-process-at-national-grid-gas-transmission/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2020/08/case-study-an-integrated-asset-investment-planning-and-management-process-at-national-grid-gas-transmission-1.webp",type:"Case Study",stage:"BOFU",region:"Europe",desc:"How National Gas Transmission built an integrated, data-driven AIP process across its gas network."},
+  {title:"Webinar: Asset Investment Planning at National Gas",url:"https://www.copperleaf.com/knowledge-hub/webinar-asset-investment-planning-and-management-at-national-grid/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/09/1920x500_enterprise-v2.webp",type:"Webinar",stage:"MOFU",region:"Europe",desc:"National Gas shares how IFS Copperleaf supports its asset investment planning programme."},
+];
+
+const blogs=[
+  {title:"IFS Copperleaf Integrated Planning for Utilities",url:"https://www.copperleaf.com/blog/ifs-copperleaf-integrated-planning-for-utilities/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2026/03/Electricity-and-gas-blog-2.png",stage:"TOFU",region:"Global",desc:"How integrated planning connects capital and operational decisions for utilities navigating grid modernisation."},
+  {title:"Grid Modernization: Advanced Capital Planning for Electric & Gas Utilities",url:"https://www.copperleaf.com/blog/grid-modernization-advanced-capital-planning-for-electric-gas-utilities/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2026/02/Elec-and-Gas-Blog-1-Banner.png",stage:"TOFU",region:"Global",desc:"The foundational campaign blog — sets out the grid modernisation challenge and IFS Copperleaf's role."},
+  {title:"How Powerco and TNB are Building Defensible, Value-Based Capital Plans",url:"https://www.copperleaf.com/blog/powerco-tnb-asset-investment-planning-webinar/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/12/IFS-Copperleaf-Webinar-TNB-Powerco-Blog.png",stage:"MOFU",region:"APJMEA",desc:"Webinar recap featuring Powerco and TNB's approach to data-driven capital planning."},
+  {title:"When the Grid Becomes the Bottleneck: TSOs in a Changing World",url:"https://www.copperleaf.com/blog/when-the-grid-becomes-the-bottleneck/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/12/TSO-Blog-banner-December-2025.png",stage:"TOFU",region:"Europe",desc:"Explores how TSOs are managing growing grid constraints and the investment decisions required."},
+  {title:"How TSOs Are Cutting Risk and Accelerating the Energy Transition",url:"https://www.copperleaf.com/blog/how-tsos-are-cutting-risk-and-accelerating-the-energy-transition/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/10/TSO.png",stage:"TOFU",region:"Europe",desc:"How transmission system operators use advanced planning to reduce investment risk."},
+  {title:"Under Pressure: How TSOs Like NGET Are Tackling Grid Investment Challenges",url:"https://www.copperleaf.com/blog/under-pressure-tsos-nget-grid-investment-challenges/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/09/National-Grid-Website-Banner-1200x500.png",stage:"MOFU",region:"Europe",desc:"Examines the investment pressures facing TSOs and how data-driven approaches build resilience."},
+  {title:"Grid of Tomorrow: What-If Analysis for Grid Investments",url:"https://www.copperleaf.com/blog/analysis-for-grid-investments/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/09/Integrated-Grid-Blog-2-3.png",stage:"MOFU",region:"Global",desc:"How scenario modelling and what-if analysis improve confidence in grid investment decisions."},
+  {title:"Why Integrated Planning is Crucial for Modern Energy Infrastructure",url:"https://www.copperleaf.com/blog/integrated-planning-energy-infrastructure-ifs-copperleaf/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/09/NGT-Blog-Banner.png",stage:"TOFU",region:"Global",desc:"The strategic case for integrating capital, risk, and operational planning in modern utilities."},
+  {title:"Grid of Tomorrow: Integrated Planning in an Era of Electrification & DER Growth",url:"https://www.copperleaf.com/blog/integrated-grid-planning-electrification/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/07/IFSCopperleaf_Energy02-1920x500.jpg",stage:"TOFU",region:"Global",desc:"How electrification and distributed energy resources are reshaping grid planning requirements."},
+  {title:"IFS Copperleaf Delivers Breakthrough Integrated Planning for Utilities",url:"https://www.copperleaf.com/blog/ifs-copperleaf-delivers-breakthrough-integrated-planning-for-utilities-facing-grid-modernization-demands/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/05/IFSCopperleaf_Transmission_v01_1200x350.webp",stage:"TOFU",region:"Global",desc:"Announcement of IFS Copperleaf's integrated planning solution for utilities facing grid modernisation."},
+  {title:"Redefining Grid Investment: How TNB is Shaping the Future of Energy Infrastructure",url:"https://www.copperleaf.com/blog/tnb-grid-investment-sustainable-energy-future/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/09/ENLIT-Asia-Website-Banner-970-x-250-1920x500.png",stage:"MOFU",region:"APJMEA",desc:"TNB's journey to redefine its capital investment strategy with IFS Copperleaf."},
+  {title:"Reimagining Capital Planning: How Endeavour Energy Is Building a Smarter, Greener Future",url:"https://www.copperleaf.com/blog/endeavour-energy-capital-planning-ifs-copperleaf/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/08/ENLIT-Asia-Website-Banner-970-x-250-5-1920x500.png",stage:"MOFU",region:"APJMEA",desc:"How Endeavour Energy reimagined capital planning to support sustainability and reliability goals."},
+  {title:"Case Study Video: How PG&E is Unlocking Efficiency with IFS Copperleaf",url:"https://www.copperleaf.com/blog/case-study-pge-ifs-copperleaf-integrated-planning/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/05/IFSCopperleaf_Transmission_v01_1920x500.webp",stage:"BOFU",region:"AMER",desc:"PG&E shares how integrated planning with IFS Copperleaf is driving efficiency and grid reliability."},
+  {title:"Case Study: Gasunie Advances Energy Transition with AI-Powered Capital Strategy",url:"https://www.copperleaf.com/blog/case-study-gasunie-advances-energy-transition-with-ai-powered-risk-informed-capital-strategy/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/08/IFSCopperleaf_GasStorage_1200x350.webp",stage:"BOFU",region:"Europe",desc:"Gasunie's use of AI-powered, risk-informed capital strategy to advance the energy transition."},
+  {title:"Grid of Tomorrow: Intelligent Bundling for a Cost-Effective Grid",url:"https://www.copperleaf.com/blog/intelligent-bundling-cost-effective-grid/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/07/Integrated-Grid-Planning-to-Performance.png",stage:"MOFU",region:"Global",desc:"How intelligent work bundling reduces costs and improves grid investment efficiency."},
+  {title:"Webinar Recap: Managing Rapid Electric Grid Growth and Transformation",url:"https://www.copperleaf.com/blog/webinar-managing-rapid-grid-growth/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/05/IFSCopperleaf_Transmission_v01_1200x350.webp",stage:"MOFU",region:"Global",desc:"Key takeaways on managing rapid grid growth with advanced planning tools."},
+  {title:"Webinar Recap: How PG&E is Transforming Grid Planning",url:"https://www.copperleaf.com/blog/webinar-transforming-grid-planning/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/05/IFSCopperleaf_Transmission_v01_1200x350.webp",stage:"MOFU",region:"AMER",desc:"PG&E's integrated risk-based investment approach to grid planning."},
+  {title:"Case Study: How Alliander is Transforming Asset Investment Planning",url:"https://www.copperleaf.com/blog/case-study-how-alliander-is-transforming-asset-investment-planning-with-copperleaf/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/02/PPT_Distribution-scaled-e1740561263404-1920x500.jpg",stage:"BOFU",region:"Europe",desc:"Alliander's transformation story — from legacy processes to data-driven AIP with IFS Copperleaf."},
+  {title:"Interview: WEL Networks – Driving Smarter Investment Decisions",url:"https://www.copperleaf.com/blog/interview-go-live-ifs-copperleaf-wel-networks/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/09/1920x500_electricalinsulator-v1-1.webp",stage:"BOFU",region:"APJMEA",desc:"WEL Networks shares its go-live experience and the impact of smarter investment decision-making."},
+  {title:"How to Enhance Grid Resilience: A Path to Reliable and Sustainable Energy",url:"https://www.copperleaf.com/blog/how-to-enhance-grid-resilience-grid-planning-copperleaf/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/11/1920x500_HighVoltageTransmission.webp",stage:"TOFU",region:"Global",desc:"Strategic guidance on enhancing grid resilience through data-informed investment planning."},
+  {title:"Case Study: Ameren Illinois's Journey from Legacy to Leading-Edge",url:"https://www.copperleaf.com/blog/case-study-ameren-illinoiss-journey-from-legacy-to-leading-edge/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/06/1920x500_transmissiontower-v2-1.webp",stage:"BOFU",region:"AMER",desc:"How Ameren Illinois modernised its asset investment planning from legacy systems to IFS Copperleaf."},
+  {title:"Real-Time Data and AIP: How FortisBC Transformed Its Capital Planning Strategy",url:"https://www.copperleaf.com/blog/real-time-data-and-aip-how-fortisbc-transformed-its-capital-planning-strategy/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2025/02/FortisBC_Real-Time-Data-and-AIP_Hero_1920x500-1920x500.webp",stage:"BOFU",region:"AMER",desc:"FortisBC's use of real-time data integration to strengthen capital planning strategy."},
+  {title:"Webinar Recap: Powering Lasting Success at Alabama Power",url:"https://www.copperleaf.com/blog/webinar-recap-powering-lasting-success-at-alabama-power/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/11/1920x500_HighVoltageTransmission.webp",stage:"MOFU",region:"AMER",desc:"Alabama Power's webinar recap on achieving lasting performance outcomes with IFS Copperleaf."},
+  {title:"Webinar Recap: Optimal Substation Asset Planning at Baltimore Gas & Electric",url:"https://www.copperleaf.com/blog/webinar-recap-case-study-optimal-substation-asset-planning-at-baltimore-gas-electric/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2024/08/PWC-BreakfastBriefing_1920x500.webp",stage:"MOFU",region:"AMER",desc:"BG&E's webinar recap on optimising substation asset planning with a data-driven approach."},
+  {title:"Webinar Recap: Business Transformation with AIP and SAP S/4HANA Integration",url:"https://www.copperleaf.com/blog/webinar-recap-driving-business-transformation-with-asset-investment-planning-and-sap-s-4hana-integration/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/11/1920x500_HighVoltageTransmission.webp",stage:"MOFU",region:"Global",desc:"How integrating AIP with SAP S/4HANA accelerates business transformation for utilities."},
+  {title:"Guest Post: Empowering People to Transform Asset Management",url:"https://www.copperleaf.com/blog/empowering-people-to-transform-asset-management/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/11/1920x500_Distribution.webp",stage:"TOFU",region:"Global",desc:"A thought leadership piece on the human and cultural dimensions of asset management transformation."},
+  {title:"Quantifying Reliability in Utilities: A Strategic Asset",url:"https://www.copperleaf.com/blog/quantifying-reliability-in-utilities-a-strategic-asset/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2026/03/elec-blog-4-banner-.png",stage:"MOFU",region:"Global",desc:"How quantifying reliability enables utilities to make more defensible, value-based investment decisions."},
+  {title:"Unlock Utility Agility through Scenario Modeling",url:"https://www.copperleaf.com/blog/unlock-utility-agility-through-scenario-modeling/",img:"https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2026/03/Elec-gas-blog-banner-.png",stage:"MOFU",region:"Global",desc:"How scenario modelling helps utilities respond to rapid change with confidence and agility."},
+];
+
+const calendarItems=[
+  {date:"Jan – Dec 2026",platform:"LinkedIn",content:"Paid Social — Website Visits",detail:"campaign launches, always-on"},
+  {date:"Jan – Dec 2026",platform:"Demandbase",content:"Programmatic Display",detail:"E&G target accounts activated"},
+  {date:"Jan 2026",platform:"LinkedIn",content:"ESG Playbook Carousel",detail:"visual story introducing the E&G campaign"},
+  {date:"Jan 2026",platform:"LinkedIn",content:"Elia Client Testimonial Video",detail:"goes live on LinkedIn"},
+  {date:"11 Feb 2026",platform:"LinkedIn",content:"Enexis Client Testimonial Video",detail:"drive registrations and awareness"},
+  {date:"24 Feb 2026",platform:"Website",content:"Blog 01 — Modern Grid Challenges for Electricity & Gas Utilities",detail:""},
+  {date:"6 Mar 2026",platform:"Website",content:"Blog 02 — Integrated Planning for Electric & Gas Utilities",detail:""},
+  {date:"11 Mar 2026",platform:"LinkedIn",content:"Powerco Client Testimonial Video",detail:"goes live on LinkedIn"},
+  {date:"24 Mar 2026",platform:"Website",content:"Blog 03 — Scenario Modeling for Grid Planning",detail:""},
+  {date:"1 Apr 2026",platform:"Website",content:"Blog 04 — Quantifying Reliability: The Business Case for Investing in Grid Resilience",detail:""},
+  {date:"29 Apr 2026",platform:"Website",content:"Blog 05 — Breaking Utility Silos: Asset Portfolio Strategy Alignment",detail:""},
+  {date:"May 2026",platform:"Website",content:"Blog 06 — ESG and Grid Modernization: Making Sustainability Actionable",detail:""},
+  {date:"May 2026",platform:"Website",content:"Blog 07 — Intelligent Work Bundling: Reducing Outages and Field Efficiency",detail:""},
+  {date:"Jun 2026",platform:"Website",content:"Blog 08 — Managing Aging Infrastructure in Electricity & Gas Utilities",detail:""},
+  {date:"Jun 2026",platform:"Website",content:"Blog 09 — Balancing Short-Term Budgets with Long-Term Resilience",detail:""},
+  {date:"Jul 2026",platform:"Website",content:"Blog 10 — Navigating Regulatory Uncertainty with Agile Decision-Making",detail:""},
+];
+
+const funnelData=[
+  {stage:"Awareness",label:"TOFU",assets:"LinkedIn Ads, Demandbase Display, Carousels",goal:"Drive targeted traffic to campaign landing page"},
+  {stage:"Educate",label:"TOFU",assets:"Blog series, hero landing page, video series",goal:"Build credibility and educate on grid modernisation"},
+  {stage:"Engage",label:"MOFU",assets:"White papers, ESG Playbook, industry reports",goal:"Capture leads and qualify intent"},
+  {stage:"Nurture",label:"MOFU",assets:"Marketo sequences, case studies, webinars",goal:"Deepen engagement and move leads toward decision"},
+  {stage:"Convert",label:"BOFU",assets:"ROI tools, demo CTAs, pitch decks, ABM outreach",goal:"Convert MQLs to sales conversations"},
+];
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function tag(label,color){return`<span class="tag" style="background:${color}22;color:${color};border:1px solid ${color}44;">${label}</span>`;}
+
+function assetCard(item){
+  const tc=typeBadge[item.type]||'#534AB7';
+  const sc=stageColor[item.stage]||'#7F77DD';
+  const regionTag=item.region&&item.region!=='Global'?tag(item.region,'#0F6E56'):'';
+  const imgHtml=item.img
+    ?`<img src="${item.img}" alt="${item.title}" onerror="this.style.display='none'">`
+    :`<div class="asset-img-placeholder">${item.type}</div>`;
+  return`<a href="${item.url}" target="_blank" class="asset-card">
+    <div class="asset-img">${imgHtml}</div>
+    <div class="asset-body">
+      <div class="asset-tags">${tag(item.type,tc)}${tag(item.stage,sc)}${regionTag}</div>
+      <div class="asset-title">${item.title}</div>
+      ${item.desc?`<div class="asset-desc">${item.desc}</div>`:''}
+      <div class="asset-cta">View →</div>
+    </div>
+  </a>`;
+}
+
+function scrollCarousel(id,amt){document.getElementById(id).scrollBy({left:amt,behavior:'smooth'});}
+function scrollTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});}
+
+// ── NAV ACTIVE STATE ──────────────────────────────────────────────────────────
+const navSections=['hero','messaging','personas','activation','content','internal','regional'];
+window.addEventListener('scroll',()=>{
+  const btns=document.querySelectorAll('.nav-btn');
+  let current='hero';
+  navSections.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<=80)current=id;});
+  const labels={hero:'Overview',messaging:'Messaging',personas:'Personas',activation:'Activation',content:'Content',internal:'Internal',regional:'Regional'};
+  btns.forEach(b=>{b.classList.toggle('active',b.textContent===labels[current]);});
+});
+
+// ── RENDER PERSONAS ───────────────────────────────────────────────────────────
+let activePersona='ceo';
+function renderPersonas(){
+  const container=document.getElementById('persona-tiers');
+  container.innerHTML=personaTiers.map(tier=>`
+    <div class="tier-label">${tier.label}</div>
+    <div class="persona-grid">
+      ${tier.personas.map(p=>`<div class="persona-card${p.id===activePersona?' active':''}" onclick="selectPersona('${p.id}')">
+        <div class="persona-abbr">${p.abbr}</div>
+        <div class="persona-name">${p.name}</div>
+      </div>`).join('')}
+    </div>
+  `).join('');
+}
+function selectPersona(id){
+  activePersona=id;
+  renderPersonas();
+  const d=personaPains[id];
+  document.getElementById('pain-title').textContent=d.title;
+  document.getElementById('pain-core').textContent=d.core;
+  document.getElementById('pain-challenges').innerHTML=d.challenges.map(c=>`<li>${c}</li>`).join('');
+  document.getElementById('pain-impact').innerHTML=d.impact.map(i=>`<li>${i}</li>`).join('');
+}
+
+// ── RENDER FUNNEL ─────────────────────────────────────────────────────────────
+function renderFunnel(){
+  document.getElementById('funnel').innerHTML=funnelData.map((f,i)=>`
+    <div class="funnel-item">
+      <div class="funnel-dot-col">
+        <div class="funnel-dot" style="background:${stageColor[f.label]}"></div>
+        ${i<funnelData.length-1?'<div class="funnel-line"></div>':''}
+      </div>
+      <div class="funnel-card">
+        <div class="funnel-head">
+          <span class="funnel-stage">${f.stage}</span>
+          ${tag(f.label,stageColor[f.label])}
+        </div>
+        <div class="funnel-detail"><span>Assets: </span>${f.assets}</div>
+        <div class="funnel-detail"><span>Goal: </span>${f.goal}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── RENDER CALENDAR ───────────────────────────────────────────────────────────
+function renderCalendar(){
+  const platColor={LinkedIn:{bg:'#534AB7',text:'#fff'},Demandbase:{bg:'#AFA9EC',text:'#26215C'},Website:{bg:'#EEEDFE',text:'#534AB7'}};
+  document.getElementById('calendar').innerHTML=calendarItems.map((item,i)=>{
+    const pc=platColor[item.platform]||{bg:'#EEEDFE',text:'#534AB7'};
+    return`<div class="cal-row ${i%2===0?'even':'odd'}">
+      <div class="cal-date">${item.date}</div>
+      <div><span class="cal-plat" style="background:${pc.bg};color:${pc.text};">${item.platform.toUpperCase()}</span></div>
+      <div class="cal-content">${item.content}${item.detail?`<span class="cal-detail"> — ${item.detail}</span>`:''}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── RENDER CAROUSELS ──────────────────────────────────────────────────────────
+let khFilter='All', blogFilter='All';
+const khFilterOpts=['All','Case Study','Video','Webinar','White Paper','Europe','AMER','APJMEA','TOFU','MOFU','BOFU'];
+const blogFilterOpts=['All','Europe','AMER','APJMEA','Global','TOFU','MOFU','BOFU'];
+
+function renderKhFilters(){
+  document.getElementById('kh-filters').innerHTML=khFilterOpts.map(v=>`<button class="filter-btn${v===khFilter?' active':''}" onclick="setKhFilter('${v}')">${v}</button>`).join('');
+}
+function setKhFilter(v){khFilter=v;renderKhFilters();renderKhTrack();}
+function renderKhTrack(){
+  const filtered=khFilter==='All'?khAssets:khAssets.filter(a=>a.region===khFilter||a.stage===khFilter||a.type===khFilter);
+  document.getElementById('kh-track').innerHTML=filtered.length?filtered.map(assetCard).join(''):`<div class="carousel-empty">No assets match the current filter.</div>`;
+}
+
+function renderBlogFilters(){
+  document.getElementById('blog-filters').innerHTML=blogFilterOpts.map(v=>`<button class="filter-btn${v===blogFilter?' active':''}" onclick="setBlogFilter('${v}')">${v}</button>`).join('');
+}
+function setBlogFilter(v){blogFilter=v;renderBlogFilters();renderBlogTrack();}
+function renderBlogTrack(){
+  const filtered=blogFilter==='All'?blogs:blogs.filter(a=>a.region===blogFilter||a.stage===blogFilter);
+  document.getElementById('blog-count').textContent=blogs.length+' posts — scroll or drag to browse';
+  document.getElementById('blog-track').innerHTML=filtered.length?filtered.map(a=>assetCard({...a,type:'Blog'})).join(''):`<div class="carousel-empty">No posts match the current filter.</div>`;
+}
+
+// ── RENDER SHAREPOINT ─────────────────────────────────────────────────────────
+function renderSP(){
+  document.getElementById('sp-grid').innerHTML=spFolders.map(f=>`
+    <a href="${f.url}" target="_blank" class="sp-card" style="text-decoration:none;color:inherit;">
+      <div class="sp-top"><span class="sp-icon">${f.icon}</span>${tag('Internal','#5F5E5A')}</div>
+      <div class="sp-title">${f.title}</div>
+      <div class="sp-desc">${f.desc}</div>
+      <div class="sp-cta">Open folder →</div>
+    </a>
+  `).join('');
+}
+
+// ── DRAG SCROLL ───────────────────────────────────────────────────────────────
+function initDrag(trackId){
+  const el=document.getElementById(trackId);
+  let dragging=false,startX=0,scrollLeft=0;
+  el.addEventListener('mousedown',e=>{dragging=true;startX=e.pageX-el.offsetLeft;scrollLeft=el.scrollLeft;el.classList.add('grabbing');});
+  el.addEventListener('mousemove',e=>{if(!dragging)return;e.preventDefault();el.scrollLeft=scrollLeft-(e.pageX-el.offsetLeft-startX);});
+  el.addEventListener('mouseup',()=>{dragging=false;el.classList.remove('grabbing');});
+  el.addEventListener('mouseleave',()=>{dragging=false;el.classList.remove('grabbing');});
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderPersonas();
+selectPersona('ceo');
+renderFunnel();
+renderCalendar();
+renderKhFilters();
+renderKhTrack();
+renderBlogFilters();
+renderBlogTrack();
+renderSP();
+initDrag('kh-track');
+initDrag('blog-track');
+</script>
+</body>
+</html>
